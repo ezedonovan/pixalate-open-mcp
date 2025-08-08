@@ -2,17 +2,21 @@
 name = "pixalate-open-mcp"
 version = "0.0.1"
 description = "Pixalate OMCP Server"
-authors = [{ name = "Pixalate", email = "info@pixalate.com" }]
+authors = [{ name = "Ezequiel", email = "info@pixalate.com" }]
 readme = "README.md"
 keywords = ['python']
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "mcp>=1.0.0",
+    "mcp[cli]>=1.0.0",
+    "anyio>=4.5",
+    "starlette>=0.36.0",
+    "uvicorn>=0.27.0",
+]
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -22,6 +26,11 @@ classifiers = [
 Homepage = "https://pixalate.github.io/pixalate-open-mcp/"
 Repository = "https://github.com/pixalate/pixalate-open-mcp"
 Documentation = "https://pixalate.github.io/pixalate-open-mcp/"
+
+[project.scripts]
+# Single entry point for server that handles both transports
+pixalate_open_mcp-server = "pixalate_open_mcp.server.app:main"
+pixalate_open_mcp-client = "pixalate_open_mcp.client.app:main"
 
 [dependency-groups]
 dev = [
@@ -114,4 +123,3 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 source = ["src"]
-
