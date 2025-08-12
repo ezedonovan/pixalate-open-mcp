@@ -1,5 +1,3 @@
-"""pixalate-open-mcp package."""
-
 import asyncio
 import logging
 import sys

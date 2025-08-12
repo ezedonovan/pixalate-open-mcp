@@ -1,47 +1,36 @@
-"""MCP server implementation with Echo tool"""
-
 import asyncio
 import sys
 from typing import Optional
 
 import click
-from mcp import types
 from mcp.server.fastmcp import FastMCP
 
-from pixalate_open_mcp.config import ServerConfig, load_config
-from pixalate_open_mcp.logging_config import logger, setup_logging
-from pixalate_open_mcp.tools.echo import echo
+from pixalate_open_mcp.models.config import ServerConfig, load_config
+from pixalate_open_mcp.utils.logging_config import logger, setup_logging
+from pixalate_open_mcp.tools.enrichment.tools import toolset as enrichment_toolset
 
 
 def create_mcp_server(config: Optional[ServerConfig] = None) -> FastMCP:
-    """Create and configure the MCP server instance"""
     if config is None:
         config = load_config()
-
-    # Set up logging first
     setup_logging(config)
-
     server = FastMCP(config.name)
-
-    # Register all tools with the server
     register_tools(server)
-
     return server
 
 
 def register_tools(mcp_server: FastMCP) -> None:
-    """Register all MCP tools with the server"""
+    for toolset in [
+        enrichment_toolset
+    ]:
+        for tool in toolset.tools:
+            mcp_server.add_tool(
+                fn=tool.handler,
+                title=tool.title,
+                description=tool.description
+            )
 
-    @mcp_server.tool(
-        name="echo",
-        description="Echo back the input text with optional case transformation",
-    )
-    def echo_tool(text: str, transform: Optional[str] = None) -> types.TextContent:
-        """Wrapper around the echo tool implementation"""
-        return echo(text, transform)
 
-
-# Create a server instance that can be imported by the MCP CLI
 server = create_mcp_server()
 
 
@@ -54,7 +43,6 @@ server = create_mcp_server()
     help="Transport type (stdio or sse)",
 )
 def main(port: int, transport: str) -> int:
-    """Run the server with specified transport."""
     try:
         if transport == "stdio":
             asyncio.run(server.run_stdio_async())

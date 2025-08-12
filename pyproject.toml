@@ -12,6 +12,7 @@ dependencies = [
     "anyio>=4.5",
     "starlette>=0.36.0",
     "uvicorn>=0.27.0",
+    "requests==2.32.4"
 ]
 classifiers = [
     "Intended Audience :: Developers",

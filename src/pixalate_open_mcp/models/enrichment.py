@@ -1,0 +1,36 @@
+from typing import List, Literal
+from pydantic import BaseModel, Field
+
+MOBILE_WIDGETS = ['appOverview', 'appDetails', 'pixalateAdvisories', 'appAdvisories', 'riskOverview',
+                  'developerOverview', 'trafficOverview', 'brandSafety', 'appPermissions', 'trafficOverlap',
+                  'authorizedSellers', 'invalidTraffic', 'viewability', 'inventory', 'ctr', 'availableCountries',
+                  'rankings', 'rankingsByCountry', 'coppa']
+
+
+class EnrichmentMobileRequest(BaseModel):
+    appIds: List[str] = Field(
+        description="List of one or many mobile app's unique identifier. This is a package name on Google Play or a track id on Apple app Store.")
+    device: Literal["GLOBAL", "smartphone", "tablet"] = Field(default="GLOBAL",
+                                                              description="Filter by device. All devices are returned by default. GLOBAL indicates aggregated traffic from all devices.")
+    region: Literal["GLOBAL", "NA", "EMEA", "LATAM", "APAC"] = Field(default="GLOBAL",
+                                                                     description="Filter by region. All regions are returned by default. GLOBAL indicates aggregated traffic from all regions.")
+    widget: List[Literal[tuple(MOBILE_WIDGETS)]] = Field(default=MOBILE_WIDGETS,
+                                                         description="Filter by widgets to return. All widgets are returned by default.")
+
+
+class EnrichmentDomainRequest(BaseModel):
+    adDomain: List[str] = Field(description="List of one or many domains.")
+    device: Literal["GLOBAL", "desktop", "mobile"] = Field(default="GLOBAL",
+                                                           description="Filter by device. All devices are returned by default.")
+    region: Literal["GLOBAL", "US", "NON-US"] = Field(default="GLOBAL",
+                                                      description="Filter by region. All regions are returned by default. GLOBAL indicates aggregated traffic from all regions.")
+
+
+class EnrichmentCTVRequest(BaseModel):
+    appIds: List[str] = Field(description="List of one or many CTV app IDs.")
+    device: Literal["roku", "firetv", "tvos", "samsung"] = Field(default="GLOBAL",
+                                                                 description="Filter by device. All devices are returned by default.")
+    region: Literal["GLOBAL", "NA", "EMEA", "LATAM", "APAC"] = Field(default="GLOBAL",
+                                                                     description="Filter by region. All regions are returned by default. GLOBAL indicates aggregated traffic from all regions.")
+    includeSpoofing: bool = Field(default=True,
+                                  description="A true indicates that spoofing information should be included.")
