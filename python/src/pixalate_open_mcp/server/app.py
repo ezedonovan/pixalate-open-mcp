@@ -22,16 +22,10 @@ def create_mcp_server(config: Optional[ServerConfig] = None) -> FastMCP:
 
 
 def register_tools(mcp_server: FastMCP) -> None:
-    for toolset in [
-        enrichment_toolset, fraud_toolset, analytics_toolset
-    ]:
+    for toolset in [enrichment_toolset, fraud_toolset, analytics_toolset]:
         toolset_name = toolset.name
         for tool in toolset.tools:
-            mcp_server.add_tool(
-                fn=tool.handler,
-                title=f"{toolset_name} - {tool.title}",
-                description=tool.description
-            )
+            mcp_server.add_tool(fn=tool.handler, title=f"{toolset_name} - {tool.title}", description=tool.description)
 
 
 server = create_mcp_server()

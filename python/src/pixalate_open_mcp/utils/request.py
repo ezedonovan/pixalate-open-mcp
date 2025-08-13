@@ -21,12 +21,8 @@ def request_handler(method: Literal[RequestMethod], url: str, **kwargs):
     try:
         params = {
             "url": url,
-            "headers": {
-                "x-api-key": config.x_api_key,
-                "Accept": "application/json",
-                "Content-Type": "text/csv"
-            },
-            **kwargs
+            "headers": {"x-api-key": config.x_api_key, "Accept": "application/json", "Content-Type": "text/csv"},
+            **kwargs,
         }
         logger.debug(f"{method} {url} {params} start")
         t0 = time.time()
@@ -49,22 +45,14 @@ def _handle_csv_upload(url: str, column_name: str, data: List[str], params: Dict
     with tempfile.TemporaryFile() as fp:
         fp.write(str("\n".join([column_name] + data) + "\n").encode())
         fp.seek(0)
-        resp = request_handler(
-            method=RequestMethod.POST,
-            url=url,
-            data=fp,
-            params=params
-        )
+        resp = request_handler(method=RequestMethod.POST, url=url, data=fp, params=params)
         resp.raise_for_status()
     # download_url = resp.json()
     return resp.json()
 
 
 def _handle_download(
-        download_url: str,
-        max_retries: int = 10,
-        ms_wait_between_retry: int = 100,
-        data_key: str = "data"
+    download_url: str, max_retries: int = 10, ms_wait_between_retry: int = 100, data_key: str = "data"
 ) -> Dict:
     retry, retry_count = True, 1
     while retry:

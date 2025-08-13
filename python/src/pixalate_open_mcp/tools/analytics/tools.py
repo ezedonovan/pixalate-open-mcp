@@ -2,8 +2,7 @@ import os
 import traceback
 from urllib.parse import urlencode
 
-from pixalate_open_mcp.models.analytics import (AnalyticsRequest,
-                                                AnalyticsResponse)
+from pixalate_open_mcp.models.analytics import AnalyticsRequest, AnalyticsResponse
 from pixalate_open_mcp.models.metadata import Metadata
 from pixalate_open_mcp.utils.logging_config import logger
 from pixalate_open_mcp.utils.request import RequestMethod, request_handler

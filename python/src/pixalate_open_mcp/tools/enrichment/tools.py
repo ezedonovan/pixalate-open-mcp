@@ -2,13 +2,10 @@ import os
 from typing import List
 from urllib.parse import urlencode
 
-from pixalate_open_mcp.models.enrichment import (EnrichmentCTVRequest,
-                                                 EnrichmentDomainRequest,
-                                                 EnrichmentMobileRequest)
+from pixalate_open_mcp.models.enrichment import EnrichmentCTVRequest, EnrichmentDomainRequest, EnrichmentMobileRequest
 from pixalate_open_mcp.models.metadata import Metadata
 from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
-from pixalate_open_mcp.utils.request import (RequestMethod, _handle_csv_upload,
-                                             _handle_download, request_handler)
+from pixalate_open_mcp.utils.request import RequestMethod, _handle_csv_upload, _handle_download, request_handler
 
 BASE_URL = "https://api.pixalate.com/api/v2/"
 
