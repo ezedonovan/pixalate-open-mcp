@@ -39,6 +39,11 @@ toolset = PixalateToolset(
     name="Fraud API",
     tools=[
         PixalateTool(
+            title="Metadata",
+            description="""The purpose of this API is to provide metadata information for Fraud API in general. The response is a JSON formatted object containing the current user's quota state and the date the fraud database was last updated.""",
+            handler=get_fraud_metadata
+        ),
+        PixalateTool(
             title="Fraud",
             description="""Retrieve probability of fraud for a specific IP, Device, or Agent. The Fraud Blocking API returns a probability (risk score) 0.01 to 1.0 representing the likelihood a given value is related to malicious or compromised devices. This risk scoring is calculated by Pixalate's proprietary machine-learning algorithm and allows clients to set their own blocking thresholds based on the quality and scale of their supply inventory. The following is a general guideline for setting fraud blocking thresholds:
 
