@@ -30,8 +30,7 @@ Documentation = "https://pixalate.github.io/pixalate-open-mcp/"
 
 [project.scripts]
 # Single entry point for server that handles both transports
-pixalate_open_mcp-server = "pixalate_open_mcp.server.app:main"
-pixalate_open_mcp-client = "pixalate_open_mcp.client.app:main"
+pixalate_open_mcp = "pixalate_open_mcp.server.app:main"
 
 [dependency-groups]
 dev = [
