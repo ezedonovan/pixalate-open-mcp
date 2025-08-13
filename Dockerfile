@@ -18,4 +18,4 @@ COPY .. /app
 # Sync the project
 RUN uv sync --frozen
 
-CMD [ "python", "pixalate_open_mcp/foo.py" ]
+CMD [ "python", "pixalate_open_mcp" ]
