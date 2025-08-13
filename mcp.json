@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "default-server": {
+      "command": "/Users/ezequieldonovan/Projects/Repos/pixalate-open-mcp/python/.venv/bin/pixalate_open_mcp",
+      "args": ["--transport", "stdio"],
+      "env": {
+        "X_API_KEY": "c0VEGVxBZ5r27dirAuLV7diy0eyXsA1N",
+        "DEBUG": "true"
+      }
+    }
+  }
+}

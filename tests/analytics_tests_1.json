@@ -1,0 +1,27 @@
+{
+  "q": {
+    "where": [
+      {
+        "field": "adDomain",
+        "values": [
+          "yahoo.com"
+        ],
+        "operator": "=",
+        "join_operator": "OR"
+      }
+    ],
+    "dateTo": "2025-08-05",
+    "sortBy": "day",
+    "dateFrom": "2025-07-01",
+    "sortByOrder": "ASC",
+    "selectMetric": [
+      "impressions"
+    ],
+    "selectDimension": [
+      "day",
+      "adDomain"
+    ]
+  },
+  "limit": 50,
+  "reportId": "default"
+}
