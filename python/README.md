@@ -1,74 +1,141 @@
-# pixalate-open-mcp
+# Pixalate Open MCP Server
 
-[![Release](https://img.shields.io/github/v/release/pixalate/pixalate-open-mcp)](https://img.shields.io/github/v/release/pixalate/pixalate-open-mcp)
-[![Build status](https://img.shields.io/github/actions/workflow/status/pixalate/pixalate-open-mcp/main.yml?branch=main)](https://github.com/pixalate/pixalate-open-mcp/actions/workflows/main.yml?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/pixalate/pixalate-open-mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/pixalate/pixalate-open-mcp)
-[![Commit activity](https://img.shields.io/github/commit-activity/m/pixalate/pixalate-open-mcp)](https://img.shields.io/github/commit-activity/m/pixalate/pixalate-open-mcp)
-[![License](https://img.shields.io/github/license/pixalate/pixalate-open-mcp)](https://img.shields.io/github/license/pixalate/pixalate-open-mcp)
+An MCP (Model Context Protocol) server that provides access to Pixalate's analytics, fraud detection, and enrichment APIs through AI assistants like Claude Desktop.
 
-Pixalate OMCP Server
+## What it provides
 
-- **Github repository**: <https://github.com/pixalate/pixalate-open-mcp/>
-- **Documentation** <https://pixalate.github.io/pixalate-open-mcp/>
+This MCP server enables AI assistants to:
+- Query **Analytics API** for reporting data and metadata
+- Access **Fraud API** for risk scoring of IPs, devices, and user agents
+- Use **Enrichment APIs** for mobile apps, CTV apps, and domain reputation data
 
-## Getting started with your project
+## Quick Start
 
-### 1. Create a New Repository
+### 1. Install the MCP server
 
-First, create a repository on GitHub with the same name as this project, and then run the following commands:
+Install using `uv` (recommended for reliability):
 
 ```bash
-git init -b main
-git add .
-git commit -m "init commit"
-git remote add origin git@github.com:pixalate/pixalate-open-mcp.git
-git push -u origin main
+# Install the MCP server as an isolated tool
+uv tool install pixalate_open_mcp
+
+# Find the installed binary path
+which pixalate_open_mcp  # macOS/Linux
+where pixalate_open_mcp  # Windows
 ```
 
-### 2. Set Up Your Development Environment
+### 2. Get your Pixalate API key
 
-Then, install the environment and the pre-commit hooks with
+You'll need a Pixalate API key to access the services:
+- Contact Pixalate support to obtain your `X_API_KEY`
+- This key provides access to Analytics, Fraud, and Enrichment APIs
 
-```bash
-make install
+### 3. Configure Claude Desktop
+
+Add this configuration to your Claude Desktop config file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "pixalate_open_mcp": {
+      "command": "/absolute/path/to/pixalate_open_mcp",
+      "env": {
+        "X_API_KEY": "your-pixalate-api-key-here"
+      }
+    }
+  }
+}
 ```
 
-This will also generate your `uv.lock` file
+### 4. Start using the tools
 
-### 3. Run the pre-commit hooks
+Once configured, restart Claude Desktop and you can ask it to:
+- "Get analytics metadata to see my quota status"
+- "Check fraud risk for IP address 192.168.1.1"  
+- "Get mobile app enrichment data for app ID com.example.app"
+- "Retrieve domain reputation for example.com"
 
-Initially, the CI/CD pipeline might be failing due to formatting issues. To resolve those run:
+## Available Tools
 
-```bash
-uv run pre-commit run -a
+### Analytics API
+
+**Report Tool**: Retrieve analytics report data  
+- Requires report configuration with dimensions, metrics, and filters
+- Returns paginated analytics data
+
+### Fraud API
+
+**Fraud Tool**: Get fraud risk probability for IPs, devices, or user agents
+- Parameters: `ip`, `device`, `agent` (one or more required)
+- Returns risk score from 0.01-1.0 where higher values indicate greater fraud risk
+
+### Enrichment API
+
+**Mobile Apps**:
+- **Metadata**: Get mobile app database status and quota
+- **Get Apps**: Retrieve risk ratings and reputation data for mobile applications
+
+**Connected TV (CTV)**:
+- **Metadata**: Get CTV app database status and quota  
+- **Get Apps**: Retrieve risk ratings and reputation data for CTV applications
+
+**Domains**:
+- **Metadata**: Get domain database status and quota
+- **Get Apps**: Retrieve risk ratings and reputation data for websites/domains
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"Tool not found" or connection errors**
+   - Verify your API key is correct and active
+   - Check that Claude Desktop configuration uses the correct absolute path
+   - Restart Claude Desktop after configuration changes
+
+2. **API quota exceeded**
+   - Use the metadata tools to check your current quota status
+   - Contact Pixalate support to increase limits if needed
+
+3. **Dependency conflicts with uvx**
+   - Use the isolated installation method with `uv tool install` instead
+   - This creates a clean environment without global conflicts
+
+### Logging
+
+The server logs activity to rotating log files:
+
+- **macOS**: `~/Library/Logs/mcp-servers/pixalate_open_mcp.log`
+- **Linux**: `~/.local/state/mcp-servers/logs/pixalate_open_mcp.log`  
+- **Windows**: `%LOCALAPPDATA%\mcp-servers\logs\pixalate_open_mcp.log`
+
+Control log verbosity with the `LOG_LEVEL` environment variable:
+```json
+{
+  "mcpServers": {
+    "pixalate_open_mcp": {
+      "command": "/path/to/pixalate_open_mcp",
+      "env": {
+        "X_API_KEY": "your-api-key",
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
 ```
 
-### 4. Commit the changes
+## Requirements
 
-Lastly, commit the changes made by the two steps above to your repository.
+- Python ≥3.12,<4.0
+- Active Pixalate API subscription
+- Operating Systems: macOS, Linux, Windows
 
-```bash
-git add .
-git commit -m 'Fix formatting issues'
-git push origin main
-```
+## License
 
-You are now ready to start development on your project!
-The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
-For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
-To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
+## Author
 
-## Releasing a new version
-
-- Create an API Token on [PyPI](https://pypi.org/).
-- Add the API Token to your projects secrets with the name `PYPI_TOKEN` by visiting [this page](https://github.com/pixalate/pixalate-open-mcp/settings/secrets/actions/new).
-- Create a [new release](https://github.com/pixalate/pixalate-open-mcp/releases/new) on Github.
-- Create a new tag in the form `*.*.*`.
-
-For more details, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/cicd/#how-to-trigger-a-release).
-
----
-
-Repository initiated with [fpgmaas/cookiecutter-uv](https://github.com/fpgmaas/cookiecutter-uv).
+Ezequiel - edonovan@pixalate.com

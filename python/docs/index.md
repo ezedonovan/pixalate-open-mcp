@@ -5,4 +5,4 @@
 [![Commit activity](https://img.shields.io/github/commit-activity/m/pixalate/pixalate-open-mcp)](https://img.shields.io/github/commit-activity/m/pixalate/pixalate-open-mcp)
 [![License](https://img.shields.io/github/license/pixalate/pixalate-open-mcp)](https://img.shields.io/github/license/pixalate/pixalate-open-mcp)
 
-Pixalate OMCP Server
+Pixalate Open MCP Server
