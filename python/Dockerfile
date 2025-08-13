@@ -13,7 +13,7 @@ COPY pyproject.toml /app/pyproject.toml
 RUN uv sync --frozen --no-install-project
 
 # Copy the project into the image
-COPY . /app
+COPY .. /app
 
 # Sync the project
 RUN uv sync --frozen

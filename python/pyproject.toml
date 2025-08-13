@@ -1,7 +1,7 @@
 [project]
 name = "pixalate-open-mcp"
 version = "0.0.1"
-description = "Pixalate OMCP Server"
+description = "Pixalate Open MCP Server"
 authors = [{ name = "Ezequiel", email = "info@pixalate.com" }]
 readme = "README.md"
 keywords = ['python']
