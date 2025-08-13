@@ -1,4 +1,5 @@
-from typing import List, Dict, Literal, Optional
+from typing import Dict, List, Literal, Optional
+
 from pydantic import BaseModel, Field
 
 from pixalate_open_mcp.models.dimensions import dimensions, metrics
@@ -7,27 +8,27 @@ DIMENSIONS = list(dimensions.get("properties").keys())
 METRICS = list(metrics.get("properties").keys())
 
 
-class QueryWhereField(BaseModel):
-    name: Literal[tuple(DIMENSIONS + METRICS)] = Field(description="Name of the field that can be filtered on.")
-
-
 class QueryWhere(BaseModel):
-    field: QueryWhereField = Field(description="Field to filter on.")
+    field: Literal[tuple(DIMENSIONS + METRICS)] = Field(description="Name of the field that can be filtered on.")
     operator: Literal["=", "!=", "CONTAINS"] = Field(description="Operator to use for the filter.")
     values: List[str | int | float] = Field(description="Possible values for the field.")
     join_operator: Literal["AND", "OR"] = Field(description="Join operator for the @values")
 
     def to_str(self) -> str:
         if self.operator == "CONTAINS":
-            return "(" + f") {self.sql_operator} (".join([
-                f"CONTAINS(LOWER({self.field.name}),LOWER('{value}'))"
-                for value in self.values
-            ]) + ")"
+            return (
+                "("
+                + f") {self.join_operator} (".join([
+                    f"CONTAINS(LOWER({self.field}),LOWER('{value}'))" for value in self.values
+                ])
+                + ")"
+            )
         else:
-            return "(" + f") {self.sql_operator} (".join([
-                f"{self.field.name} {self.operator} '{value}'"
-                for value in self.values
-            ]) + ")"
+            return (
+                "("
+                + f") {self.join_operator} (".join([f"{self.field} {self.operator} '{value}'" for value in self.values])
+                + ")"
+            )
 
 
 class QueryConstruct(BaseModel):
@@ -36,12 +37,16 @@ class QueryConstruct(BaseModel):
     where: List[QueryWhere] = Field(default=None, description="List of one or many where filters.")
     dateFrom: str = Field(description="Start date in YYYY-MM-DD format")
     dateTo: str = Field(description="End date in YYYY-MM-DD format")
-    sortBy: List[Literal[tuple(DIMENSIONS + METRICS)]] = Field(default=None,
-                                                               description="List of one or many dimensions or metrics to sort by. If not specified, the default is to sort by the first dimension in the selectDimension list.")
-    sortByOrder: Literal["ASC", "DESC"] = Field(default="DESC",
-                                                description="Sort order. If not specified, the default is to sort in descending order.")
-    groupBy: List[Literal[tuple(DIMENSIONS + METRICS)]] = Field(default=None,
-                                                                description="List of one or many dimensions or metrics to group by.")
+    sortBy: Literal[tuple(DIMENSIONS + METRICS)] = Field(
+        default=None,
+        description="List of one or many dimensions or metrics to sort by. If not specified, the default is to sort by the first dimension in the selectDimension list.",
+    )
+    sortByOrder: Literal["ASC", "DESC"] = Field(
+        default="DESC", description="Sort order. If not specified, the default is to sort in descending order."
+    )
+    groupBy: List[Literal[tuple(DIMENSIONS + METRICS)]] = Field(
+        default=None, description="List of one or many dimensions or metrics to group by."
+    )
 
     def _construct_select(self):
         _select = []
@@ -94,16 +99,19 @@ class QueryConstruct(BaseModel):
 
 
 class AnalyticsRequest(BaseModel):
-    reportId: str = Field(default="default",
-                          description="The report's unique identifier. To request the default analytics report, use the term default as the report identifier.")
-    timeZone: int = Field(default=0,
-                          description="The time zone in which to sync the report data. The timezone is the number of minutes from GMT. Default is 0.")
-    start: int = Field(default=0,
-                       description="The offset start item.")
-    limit: int = Field(default=20,
-                       description="The total number of items to return. Default is 20.")
-    q: QueryConstruct = Field(default="",
-                              description="""A URL encoded query to run to retrieve data. It uses a simplified SQL SELECT syntax as follows:
+    reportId: str = Field(
+        default="default",
+        description="The report's unique identifier. To request the default analytics report, use the term default as the report identifier.",
+    )
+    timeZone: int = Field(
+        default=0,
+        description="The time zone in which to sync the report data. The timezone is the number of minutes from GMT. Default is 0.",
+    )
+    start: int = Field(default=0, description="The offset start item.")
+    limit: int = Field(default=20, description="The total number of items to return. Default is 20.")
+    q: QueryConstruct = Field(
+        default="",
+        description="""A URL encoded query to run to retrieve data. It uses a simplified SQL SELECT syntax as follows:
 
 [ column [ ,column... ] ] [ WHERE expression ] [ GROUP BY column [ ,column... ] ] [ ORDER BY column [ DESC ] ]
 
@@ -119,14 +127,20 @@ literal	number, or string, or date
 number	An integer or decimal number.
 string	A text string surrounded by single quotes.
 date	A date as yyyy-mm-dd format surrounded by single quotes.
-Example : impressions,nonGivtViews,nonGivtViewsRate,nonGivtViewability,viewability,givtSivtRate,sivtRate,givtRate WHERE day>='2023-01-16' AND day<='2023-01-16' ORDER BY impressions DESC""")
-    exportUri: bool = Field(default=False,
-                            description="Setting this flag to true indicates that the API returns a URI to the CSV data as an Internet resource rather than the data itself. While the resulting resource is public, the URI contains a randomly generated identifier that ensures the data is relatively secure unless the URI itself is made public by the user."
-                            )
-    isAsync: bool = Field(default=True,
-                          description="If set to true, a CSV URI response is returned immediately. However, this will return a 404 Not Found HTTP status code until the service completes processing the report. Note that this parameter is only recognized when the exportUri parameter is also supplied as true. Note also that the limit parameter is ignored when this parameter is set to true.")
-    isLargeResultSet: bool = Field(default=False,
-                                   description="""If set to true, then processing is handled identically as if the isAsync parameter is set to true. However, the returned CSV file contains a single column with each row being a URL to a CSV file that contains part of the data. Large results that set ORDER BY may cause an 400 Bad Request HTTP status code. To resolve, try removing the ORDER BY clause. Note that this parameter is only recognized when the exportUri parameter is also supplied as true. Note also that the limit parameter is ignored when this parameter is set to true.""")
+Example : impressions,nonGivtViews,nonGivtViewsRate,nonGivtViewability,viewability,givtSivtRate,sivtRate,givtRate WHERE day>='2023-01-16' AND day<='2023-01-16' ORDER BY impressions DESC""",
+    )
+    exportUri: bool = Field(
+        default=False,
+        description="Setting this flag to true indicates that the API returns a URI to the CSV data as an Internet resource rather than the data itself. While the resulting resource is public, the URI contains a randomly generated identifier that ensures the data is relatively secure unless the URI itself is made public by the user.",
+    )
+    isAsync: bool = Field(
+        default=True,
+        description="If set to true, a CSV URI response is returned immediately. However, this will return a 404 Not Found HTTP status code until the service completes processing the report. Note that this parameter is only recognized when the exportUri parameter is also supplied as true. Note also that the limit parameter is ignored when this parameter is set to true.",
+    )
+    isLargeResultSet: bool = Field(
+        default=False,
+        description="""If set to true, then processing is handled identically as if the isAsync parameter is set to true. However, the returned CSV file contains a single column with each row being a URL to a CSV file that contains part of the data. Large results that set ORDER BY may cause an 400 Bad Request HTTP status code. To resolve, try removing the ORDER BY clause. Note that this parameter is only recognized when the exportUri parameter is also supplied as true. Note also that the limit parameter is ignored when this parameter is set to true.""",
+    )
     pretty: bool = Field(default=False, description="If true, return pretty JSON. Default is false.")
 
 

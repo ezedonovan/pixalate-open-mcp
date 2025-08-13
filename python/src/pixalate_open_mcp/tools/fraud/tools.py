@@ -1,39 +1,27 @@
 import os
 from urllib.parse import urlencode
-from typing import Dict, List, Any
 
-from pixalate_open_mcp.models.metadata import Metadata
 from pixalate_open_mcp.models.fraud import FraudRequest, FraudResponse
-from pixalate_open_mcp.utils.request import request_handler, RequestMethod
+from pixalate_open_mcp.models.metadata import Metadata
+from pixalate_open_mcp.utils.request import RequestMethod, request_handler
 
 BASE_URL = "https://fraud-api.pixalate.com/api/v2/"
 
 
-def get_fraud_metadata(pretty: bool = False) -> Dict | Metadata:
+def get_fraud_metadata(pretty: bool = False) -> dict | Metadata:
     resp = request_handler(
-        method=RequestMethod.GET,
-        url=os.path.join(BASE_URL, "fraud") + "?" + urlencode({"pretty": pretty}).lower()
+        method=RequestMethod.GET, url=os.path.join(BASE_URL, "fraud") + "?" + urlencode({"pretty": pretty}).lower()
     )
     resp.raise_for_status()
     return resp.json()
 
 
-def get_fraud(
-        request: FraudRequest
-) -> Dict | FraudResponse:
-    resp = request_handler(
-        method=RequestMethod.GET,
-        url=os.path.join(BASE_URL, "fraud"),
-        params=dict(
-            ip=request.ip,
-            deviceId=request.deviceId,
-            userAgent=request.userAgent,
-        )
-    )
+def get_fraud(request: FraudRequest) -> dict | FraudResponse:
+    resp = request_handler(method=RequestMethod.GET, url=os.path.join(BASE_URL, "fraud"), params=request.to_params())
     return resp.json()
 
 
-from pixalate_open_mcp.models.tools import PixalateToolset, PixalateTool
+from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
 
 toolset = PixalateToolset(
     name="Fraud API",
@@ -41,7 +29,7 @@ toolset = PixalateToolset(
         PixalateTool(
             title="Metadata",
             description="""The purpose of this API is to provide metadata information for Fraud API in general. The response is a JSON formatted object containing the current user's quota state and the date the fraud database was last updated.""",
-            handler=get_fraud_metadata
+            handler=get_fraud_metadata,
         ),
         PixalateTool(
             title="Fraud",
@@ -56,7 +44,7 @@ Pixalate does not recommend blocking any probabilities less than 0.5. When makin
 Zero or more of the following parameters may be provided. If more than one parameter is specified, the probability returned is determined by assessing risk based on the combination of each parameter's individual risk probability.
 
 Not specifying an IP, Device, or Agent will return the metadata for fraud, including the user's current quota. See alternate response schema below.""",
-            handler=get_fraud
-        )
-    ]
+            handler=get_fraud,
+        ),
+    ],
 )

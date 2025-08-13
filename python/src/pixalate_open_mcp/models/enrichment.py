@@ -1,4 +1,5 @@
 from typing import List, Literal
+
 from pydantic import BaseModel, Field
 
 MOBILE_WIDGETS = ['appOverview', 'appDetails', 'pixalateAdvisories', 'appAdvisories', 'riskOverview',

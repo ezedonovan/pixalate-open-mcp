@@ -6,11 +6,10 @@ import click
 from mcp.server.fastmcp import FastMCP
 
 from pixalate_open_mcp.models.config import ServerConfig, load_config
-from pixalate_open_mcp.utils.logging_config import logger, setup_logging
-
+from pixalate_open_mcp.tools.analytics.tools import toolset as analytics_toolset
 from pixalate_open_mcp.tools.enrichment.tools import toolset as enrichment_toolset
 from pixalate_open_mcp.tools.fraud.tools import toolset as fraud_toolset
-from pixalate_open_mcp.tools.analytics.tools import toolset as analytics_toolset
+from pixalate_open_mcp.utils.logging_config import logger, setup_logging
 
 
 def create_mcp_server(config: Optional[ServerConfig] = None) -> FastMCP:
