@@ -8,6 +8,7 @@ from mcp.server.fastmcp import FastMCP
 from pixalate_open_mcp.models.config import ServerConfig, load_config
 from pixalate_open_mcp.utils.logging_config import logger, setup_logging
 from pixalate_open_mcp.tools.enrichment.tools import toolset as enrichment_toolset
+from pixalate_open_mcp.tools.fraud.tools import toolset as fraud_toolset
 
 
 def create_mcp_server(config: Optional[ServerConfig] = None) -> FastMCP:
@@ -21,7 +22,7 @@ def create_mcp_server(config: Optional[ServerConfig] = None) -> FastMCP:
 
 def register_tools(mcp_server: FastMCP) -> None:
     for toolset in [
-        enrichment_toolset
+        enrichment_toolset, fraud_toolset
     ]:
         for tool in toolset.tools:
             mcp_server.add_tool(

@@ -2,13 +2,15 @@ import os
 from urllib.parse import urlencode
 from typing import Dict, List, Any
 
+from pixalate_open_mcp.models.tools import PixalateToolset, PixalateTool
+from pixalate_open_mcp.models.metadata import Metadata
 from pixalate_open_mcp.models.enrichment import EnrichmentMobileRequest, EnrichmentDomainRequest, EnrichmentCTVRequest
 from pixalate_open_mcp.utils.request import request_handler, RequestMethod, _handle_csv_upload, _handle_download
 
 BASE_URL = "https://api.pixalate.com/api/v2/"
 
 
-def get_enrichment_mobile_metadata(pretty: bool = False) -> Dict:
+def get_enrichment_mobile_metadata(pretty: bool = False) -> Dict | Metadata:
     resp = request_handler(
         method=RequestMethod.GET,
         url=os.path.join(BASE_URL, "mrt", "apps") + "?" + urlencode({"pretty": pretty}).lower()
@@ -32,7 +34,7 @@ def get_enrichment_mobile_app(
     )
 
 
-def get_enrichment_ctv_metadata(pretty: bool = False) -> Dict:
+def get_enrichment_ctv_metadata(pretty: bool = False) -> Dict | Metadata:
     resp = request_handler(
         method=RequestMethod.GET,
         url=os.path.join(BASE_URL, "mrt", "ctv") + "?" + urlencode({"pretty": pretty}).lower()
@@ -56,7 +58,7 @@ def get_enrichment_ctv_app(
     )
 
 
-def get_enrichment_domains_metadata(pretty: bool = False) -> Dict:
+def get_enrichment_domains_metadata(pretty: bool = False) -> Dict | Metadata:
     resp = request_handler(
         method=RequestMethod.GET,
         url=os.path.join(BASE_URL, "mrt", "domains") + "?" + urlencode({"pretty": pretty}).lower()
@@ -103,8 +105,6 @@ def _handle_enrichment_request(
         )
         return resp.json()
 
-
-from pixalate_open_mcp.models.tools import PixalateToolset, PixalateTool
 
 toolset = PixalateToolset(
     name="Enrichment API",
