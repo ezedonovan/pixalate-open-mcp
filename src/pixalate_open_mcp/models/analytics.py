@@ -1,4 +1,4 @@
-from typing import Dict, List, Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -11,7 +11,7 @@ METRICS = list(metrics.get("properties").keys())
 class QueryWhere(BaseModel):
     field: Literal[tuple(DIMENSIONS + METRICS)] = Field(description="Name of the field that can be filtered on.")
     operator: Literal["=", "!=", "CONTAINS"] = Field(description="Operator to use for the filter.")
-    values: List[str | int | float] = Field(description="Possible values for the field.")
+    values: list[str | int | float] = Field(description="Possible values for the field.")
     join_operator: Literal["AND", "OR"] = Field(description="Join operator for the @values")
 
     def to_str(self) -> str:
@@ -32,9 +32,9 @@ class QueryWhere(BaseModel):
 
 
 class QueryConstruct(BaseModel):
-    selectDimension: List[Literal[tuple(DIMENSIONS)]] = Field(description="List of one or many dimensions to retrieve.")
-    selectMetric: List[Literal[tuple(METRICS)]] = Field(description="List of one or many metrics to retrieve.")
-    where: List[QueryWhere] = Field(default=None, description="List of one or many where filters.")
+    selectDimension: list[Literal[tuple(DIMENSIONS)]] = Field(description="List of one or many dimensions to retrieve.")
+    selectMetric: list[Literal[tuple(METRICS)]] = Field(description="List of one or many metrics to retrieve.")
+    where: list[QueryWhere] = Field(default=None, description="List of one or many where filters.")
     dateFrom: str = Field(description="Start date in YYYY-MM-DD format")
     dateTo: str = Field(description="End date in YYYY-MM-DD format")
     sortBy: Literal[tuple(DIMENSIONS + METRICS)] = Field(
@@ -44,7 +44,7 @@ class QueryConstruct(BaseModel):
     sortByOrder: Literal["ASC", "DESC"] = Field(
         default="DESC", description="Sort order. If not specified, the default is to sort in descending order."
     )
-    groupBy: List[Literal[tuple(DIMENSIONS + METRICS)]] = Field(
+    groupBy: list[Literal[tuple(DIMENSIONS + METRICS)]] = Field(
         default=None, description="List of one or many dimensions or metrics to group by."
     )
 
@@ -146,4 +146,4 @@ Example : impressions,nonGivtViews,nonGivtViewsRate,nonGivtViewability,viewabili
 
 class AnalyticsResponse(BaseModel):
     numFound: int = Field(description="The total number of documents matching the query.")
-    docs: List[Dict] = Field(description="The documents matching the query.")
+    docs: list[dict] = Field(description="The documents matching the query.")

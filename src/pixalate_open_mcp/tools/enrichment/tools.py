@@ -1,5 +1,4 @@
 import os
-from typing import List
 from urllib.parse import urlencode
 
 from pixalate_open_mcp.models.enrichment import EnrichmentCTVRequest, EnrichmentDomainRequest, EnrichmentMobileRequest
@@ -63,7 +62,7 @@ def get_enrichment_domains(request: EnrichmentDomainRequest) -> dict:
     )
 
 
-def _handle_enrichment_request(url, app_or_domain_ids: List[str], column_name: str, params: dict) -> dict:
+def _handle_enrichment_request(url, app_or_domain_ids: list[str], column_name: str, params: dict) -> dict:
     if len(app_or_domain_ids) > 1:
         download_url = _handle_csv_upload(url=url, column_name=column_name, data=app_or_domain_ids, params=params)
         data = _handle_download(download_url)

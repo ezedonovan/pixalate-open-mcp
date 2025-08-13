@@ -9,7 +9,8 @@ class QuotaMetadata(BaseModel):
     available: int = Field(description="The amount of quota available for use.")
     used: int = Field(description="The amount of quota used.")
     expiry: str = Field(
-        description="The datetime when the quota will be refreshed back to the limit. The datetime format is YYYY-MM-DDTHH:MM:SS.SSSZ.")
+        description="The datetime when the quota will be refreshed back to the limit. The datetime format is YYYY-MM-DDTHH:MM:SS.SSSZ."
+    )
     limit: int = Field(description="The amount of quota to be made available for use when the quota is refreshed.")
     interval: int = Field(description="The number of time units used in calculating the quota refresh datetime.")
     timeUnit: str = Field(description="The time unit used in calculating the quota refresh datetime.")

@@ -54,7 +54,7 @@ Add this configuration to your Claude Desktop config file:
 
 Once configured, restart Claude Desktop and you can ask it to:
 - "Get analytics metadata to see my quota status"
-- "Check fraud risk for IP address 192.168.1.1"  
+- "Check fraud risk for IP address 192.168.1.1"
 - "Get mobile app enrichment data for app ID com.example.app"
 - "Retrieve domain reputation for example.com"
 
@@ -62,7 +62,7 @@ Once configured, restart Claude Desktop and you can ask it to:
 
 ### Analytics API
 
-**Report Tool**: Retrieve analytics report data  
+**Report Tool**: Retrieve analytics report data
 - Requires report configuration with dimensions, metrics, and filters
 - Returns paginated analytics data
 
@@ -79,7 +79,7 @@ Once configured, restart Claude Desktop and you can ask it to:
 - **Get Apps**: Retrieve risk ratings and reputation data for mobile applications
 
 **Connected TV (CTV)**:
-- **Metadata**: Get CTV app database status and quota  
+- **Metadata**: Get CTV app database status and quota
 - **Get Apps**: Retrieve risk ratings and reputation data for CTV applications
 
 **Domains**:
@@ -108,7 +108,7 @@ Once configured, restart Claude Desktop and you can ask it to:
 The server logs activity to rotating log files:
 
 - **macOS**: `~/Library/Logs/mcp-servers/pixalate_open_mcp.log`
-- **Linux**: `~/.local/state/mcp-servers/logs/pixalate_open_mcp.log`  
+- **Linux**: `~/.local/state/mcp-servers/logs/pixalate_open_mcp.log`
 - **Windows**: `%LOCALAPPDATA%\mcp-servers\logs\pixalate_open_mcp.log`
 
 Control log verbosity with the `LOG_LEVEL` environment variable:

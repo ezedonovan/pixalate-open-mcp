@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 from pixalate_open_mcp.models.analytics import AnalyticsRequest, AnalyticsResponse
 from pixalate_open_mcp.models.metadata import Metadata
+from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
 from pixalate_open_mcp.utils.logging_config import logger
 from pixalate_open_mcp.utils.request import RequestMethod, request_handler
 
@@ -33,8 +34,6 @@ def get_analytics_report(request: AnalyticsRequest) -> dict | AnalyticsResponse:
         logger.error(traceback.format_exc())
         return {"error": str(e)}
 
-
-from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
 
 toolset = PixalateToolset(
     name="Analytics API",

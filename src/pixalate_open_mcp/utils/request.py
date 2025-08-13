@@ -2,7 +2,7 @@ import json
 import tempfile
 import time
 import traceback
-from typing import Dict, List, Literal
+from typing import Literal
 
 import requests
 
@@ -17,6 +17,13 @@ class RequestMethod:
     GET = "GET"
 
 
+def raise_invalid_request():
+    class InvalidRequestMethod(Exception):
+        pass
+
+    raise InvalidRequestMethod()
+
+
 def request_handler(method: Literal[RequestMethod], url: str, **kwargs):
     try:
         params = {
@@ -27,23 +34,24 @@ def request_handler(method: Literal[RequestMethod], url: str, **kwargs):
         logger.debug(f"{method} {url} {params} start")
         t0 = time.time()
         if method == RequestMethod.POST:
-            resp = requests.post(**params)
+            resp = requests.post(**params, timeout=60)
         elif method == RequestMethod.GET:
-            resp = requests.get(**params)
+            resp = requests.get(**params, timeout=60)
         else:
-            raise ValueError(f"Invalid method: {method}")
+            raise_invalid_request()
         time_spent = t0 - time.time()
         resp.raise_for_status()
         logger.debug(f"{method} {url} complete - status code {resp.status_code} in {time_spent} sec")
-        return resp
-    except Exception as e:
+    except Exception:
         logger.error(traceback.format_exc())
-        raise e
+        raise
+    else:
+        return resp
 
 
-def _handle_csv_upload(url: str, column_name: str, data: List[str], params: Dict) -> str:
+def _handle_csv_upload(url: str, column_name: str, data: list[str], params: dict) -> str:
     with tempfile.TemporaryFile() as fp:
-        fp.write(str("\n".join([column_name] + data) + "\n").encode())
+        fp.write(str("\n".join([column_name, *data]) + "\n").encode())
         fp.seek(0)
         resp = request_handler(method=RequestMethod.POST, url=url, data=fp, params=params)
         resp.raise_for_status()
@@ -51,9 +59,17 @@ def _handle_csv_upload(url: str, column_name: str, data: List[str], params: Dict
     return resp.json()
 
 
+class MaxRetriesExceeded(Exception):
+    def __init__(self, message, max_retries, download_url):
+        super().__init__(message)
+        self.max_retries = max_retries
+        self.download_url = download_url
+        self.full_message = f"Retry max {self.max_retries} times to get document from {self.download_url}"
+
+
 def _handle_download(
     download_url: str, max_retries: int = 10, ms_wait_between_retry: int = 100, data_key: str = "data"
-) -> Dict:
+) -> dict:
     retry, retry_count = True, 1
     while retry:
         response = request_handler(
@@ -66,7 +82,7 @@ def _handle_download(
             time.sleep(ms_wait_between_retry)
             retry_count += 1
         if retry_count > max_retries:
-            raise Exception(f"Retry max {max_retries} times to get document from {download_url}")
+            raise MaxRetriesExceeded("", max_retries, download_url)
 
     json_objects = response.text.strip().split("\n")
     datas = []

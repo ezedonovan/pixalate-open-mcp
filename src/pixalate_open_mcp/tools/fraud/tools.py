@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 
 from pixalate_open_mcp.models.fraud import FraudRequest, FraudResponse
 from pixalate_open_mcp.models.metadata import Metadata
+from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
 from pixalate_open_mcp.utils.request import RequestMethod, request_handler
 
 BASE_URL = "https://fraud-api.pixalate.com/api/v2/"
@@ -20,8 +21,6 @@ def get_fraud(request: FraudRequest) -> dict | FraudResponse:
     resp = request_handler(method=RequestMethod.GET, url=os.path.join(BASE_URL, "fraud"), params=request.to_params())
     return resp.json()
 
-
-from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
 
 toolset = PixalateToolset(
     name="Fraud API",

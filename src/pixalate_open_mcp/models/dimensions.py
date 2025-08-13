@@ -5,603 +5,211 @@ dimensions = {
         "adDomain": {
             "type": "string",
             "description": "Detected Domain of site where ad was displayed",
-            "example": "example.org"
+            "example": "example.org",
         },
-        "adSize": {
-            "type": "string",
-            "description": "Size of the ad",
-            "example": "320x50"
-        },
+        "adSize": {"type": "string", "description": "Size of the ad", "example": "320x50"},
         "adTrafficSource": {
             "type": "string",
             "description": "Domain of which referred visitor to ad domain",
-            "example": "Discovery"
+            "example": "Discovery",
         },
-        "advertiserId": {
-            "type": "string",
-            "description": "Advertiser identifier",
-            "example": "1263B"
-        },
-        "areaCode": {
-            "type": "string",
-            "description": "Visitor’s area code",
-            "example": "650"
-        },
-        "browserName": {
-            "type": "string",
-            "description": "Visitor’s browser name",
-            "example": "AppleWebKit"
-        },
-        "campaignId": {
-            "type": "string",
-            "description": "Campaign identifier",
-            "example": "160529"
-        },
-        "city": {
-            "type": "string",
-            "description": "Visitor’s city",
-            "example": "Macon"
-        },
-        "countryCode": {
-            "type": "string",
-            "description": "Visitor’s country code",
-            "example": "US"
-        },
-        "countryName": {
-            "type": "string",
-            "description": "Visitor’s country name",
-            "example": "UnitedStates"
-        },
-        "day": {
-            "type": "string",
-            "description": "Date",
-            "example": "2023-01-16"
-        },
-        "deviceBrandName": {
-            "type": "string",
-            "description": "Visitor’s device brand name",
-            "example": "Apple"
-        },
-        "deviceModelId": {
-            "type": "string",
-            "description": "Visitor’s device identifier",
-            "example": "AppleIphonev"
-        },
+        "advertiserId": {"type": "string", "description": "Advertiser identifier", "example": "1263B"},
+        "areaCode": {"type": "string", "description": "Visitors area code", "example": "650"},
+        "browserName": {"type": "string", "description": "Visitors browser name", "example": "AppleWebKit"},
+        "campaignId": {"type": "string", "description": "Campaign identifier", "example": "160529"},
+        "city": {"type": "string", "description": "Visitors city", "example": "Macon"},
+        "countryCode": {"type": "string", "description": "Visitors country code", "example": "US"},
+        "countryName": {"type": "string", "description": "Visitors country name", "example": "UnitedStates"},
+        "day": {"type": "string", "description": "Date", "example": "2023-01-16"},
+        "deviceBrandName": {"type": "string", "description": "Visitors device brand name", "example": "Apple"},
+        "deviceModelId": {"type": "string", "description": "Visitors device identifier", "example": "AppleIphonev"},
         "deviceMarketingName": {
             "type": "string",
-            "description": "Visitor’s device marketing name",
-            "example": "AppleIphone"
+            "description": "Visitors device marketing name",
+            "example": "AppleIphone",
         },
         "deviceTrafficType": {
             "type": "string",
-            "description": "Visitor’s Detected device Traffic type",
-            "example": "app"
+            "description": "Visitors Detected device Traffic type",
+            "example": "app",
         },
-        "deviceType": {
-            "type": "string",
-            "description": "Visitor’s device type",
-            "example": "mobile"
-        },
-        "dma": {
-            "type": "string",
-            "description": "Designated Market Area",
-            "example": "503"
-        },
-        "fraudType": {
-            "type": "string",
-            "description": "Fraud Traffic Type",
-            "example": "maskedIp"
-        },
-        "ipv6Type": {
-            "type": "string",
-            "description": "IPv6 Type",
-            "example": "6to4"
-        },
-        "kv1": {
-            "type": "string",
-            "description": "Creative Size",
-            "example": "320x50"
-        },
-        "kv2": {
-            "type": "string",
-            "description": "Page URL",
-            "example": "https://www.example.com/2322222/example.html"
-        },
-        "kv3": {
-            "type": "string",
-            "description": "<p>User ID",
-            "example": "74b724ec10"
-        },
-        "kv4": {
-            "type": "string",
-            "description": "<p>User IP (can be IPv4 or IPv6)",
-            "example": "192.168.1.0"
-        },
-        "kv5": {
-            "type": "string",
-            "description": "(Custom)",
-            "example": "U.S. Dept. of Commerce - NOAA - NMFS"
-        },
-        "kv6": {
-            "type": "string",
-            "description": "(Custom UTM Value)",
-            "example": "IAB19-29"
-        },
-        "kv7": {
-            "type": "string",
-            "description": "Seller ID",
-            "example": 5
-        },
-        "kv8": {
-            "type": "string",
-            "description": "(Custom UTM Value)",
-            "example": "example_ex2"
-        },
-        "kv9": {
-            "type": "string",
-            "description": "Content Duration",
-            "example": "45.0"
-        },
-        "kv10": {
-            "type": "string",
-            "description": "ISP",
-            "example": "AT&T Wireless"
-        },
-        "kv12": {
-            "type": "string",
-            "description": "Placement ID",
-            "example": "78768/6177"
-        },
-        "kv13": {
-            "type": "string",
-            "description": "Content ID",
-            "example": "8907892376"
-        },
-        "kv14": {
-            "type": "string",
-            "description": "MRAID Version",
-            "example": "1,2"
-        },
-        "kv15": {
-            "type": "string",
-            "description": "Geographic Region",
-            "example": "OMAHA"
-        },
-        "kv16": {
-            "type": "string",
-            "description": "Latitude",
-            "example": "65.0"
-        },
-        "kv17": {
-            "type": "string",
-            "description": "Longitude",
-            "example": "-147.5"
-        },
-        "kv18": {
-            "type": "string",
-            "description": "App ID or Bundle ID",
-            "example": "1523297725"
-        },
-        "kv19": {
-            "type": "string",
-            "description": "Device ID",
-            "example": "e499"
-        },
-        "kv20": {
-            "type": "string",
-            "description": "Device ID (additional if needed)",
-            "example": "2279d822"
-        },
-        "kv21": {
-            "type": "string",
-            "description": "Device ID (additional if needed)",
-            "example": "9dffe499822227"
-        },
-        "kv22": {
-            "type": "string",
-            "description": "Device ID (additional if needed)",
-            "example": "9dff87e499"
-        },
-        "kv23": {
-            "type": "string",
-            "description": "Carrier ID",
-            "example": "iPhone:Apple"
-        },
-        "kv24": {
-            "type": "string",
-            "description": "Supply Type",
-            "example": "Mobile_InApp_Video"
-        },
-        "kv25": {
-            "type": "string",
-            "description": "App Name",
-            "example": "Example Player"
-        },
-        "kv26": {
-            "type": "string",
-            "description": "Device OS",
-            "example": "iPhone OS"
-        },
+        "deviceType": {"type": "string", "description": "Visitors device type", "example": "mobile"},
+        "dma": {"type": "string", "description": "Designated Market Area", "example": "503"},
+        "fraudType": {"type": "string", "description": "Fraud Traffic Type", "example": "maskedIp"},
+        "ipv6Type": {"type": "string", "description": "IPv6 Type", "example": "6to4"},
+        "kv1": {"type": "string", "description": "Creative Size", "example": "320x50"},
+        "kv2": {"type": "string", "description": "Page URL", "example": "https://www.example.com/2322222/example.html"},
+        "kv3": {"type": "string", "description": "<p>User ID", "example": "74b724ec10"},
+        "kv4": {"type": "string", "description": "<p>User IP (can be IPv4 or IPv6)", "example": "192.168.1.0"},
+        "kv5": {"type": "string", "description": "(Custom)", "example": "U.S. Dept. of Commerce - NOAA - NMFS"},
+        "kv6": {"type": "string", "description": "(Custom UTM Value)", "example": "IAB19-29"},
+        "kv7": {"type": "string", "description": "Seller ID", "example": 5},
+        "kv8": {"type": "string", "description": "(Custom UTM Value)", "example": "example_ex2"},
+        "kv9": {"type": "string", "description": "Content Duration", "example": "45.0"},
+        "kv10": {"type": "string", "description": "ISP", "example": "AT&T Wireless"},
+        "kv12": {"type": "string", "description": "Placement ID", "example": "78768/6177"},
+        "kv13": {"type": "string", "description": "Content ID", "example": "8907892376"},
+        "kv14": {"type": "string", "description": "MRAID Version", "example": "1,2"},
+        "kv15": {"type": "string", "description": "Geographic Region", "example": "OMAHA"},
+        "kv16": {"type": "string", "description": "Latitude", "example": "65.0"},
+        "kv17": {"type": "string", "description": "Longitude", "example": "-147.5"},
+        "kv18": {"type": "string", "description": "App ID or Bundle ID", "example": "1523297725"},
+        "kv19": {"type": "string", "description": "Device ID", "example": "e499"},
+        "kv20": {"type": "string", "description": "Device ID (additional if needed)", "example": "2279d822"},
+        "kv21": {"type": "string", "description": "Device ID (additional if needed)", "example": "9dffe499822227"},
+        "kv22": {"type": "string", "description": "Device ID (additional if needed)", "example": "9dff87e499"},
+        "kv23": {"type": "string", "description": "Carrier ID", "example": "iPhone:Apple"},
+        "kv24": {"type": "string", "description": "Supply Type", "example": "Mobile_InApp_Video"},
+        "kv25": {"type": "string", "description": "App Name", "example": "Example Player"},
+        "kv26": {"type": "string", "description": "Device OS", "example": "iPhone OS"},
         "kv27": {
             "type": "string",
             "description": "Useragent",
-            "example": "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6295; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/106.0.5249.170 Mobile Safari/537.36"
+            "example": "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6295; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/106.0.5249.170 Mobile Safari/537.36",
         },
-        "kv28": {
-            "type": "string",
-            "description": "Device manufacturer/model",
-            "example": "Apple_iPhone SE"
-        },
-        "kv32": {
-            "type": "string",
-            "description": "App ID",
-            "example": "637671"
-        },
-        "kv44": {
-            "type": "string",
-            "description": "Video Play Status",
-            "example": None
-        },
-        "kv52": {
-            "type": "string",
-            "description": "SSAI integration",
-            "example": None
-        },
+        "kv28": {"type": "string", "description": "Device manufacturer/model", "example": "Apple_iPhone SE"},
+        "kv32": {"type": "string", "description": "App ID", "example": "637671"},
+        "kv44": {"type": "string", "description": "Video Play Status", "example": None},
+        "kv52": {"type": "string", "description": "SSAI integration", "example": None},
         "kv55": {
             "type": "string",
             "description": "Serialized supply chain object",
-            "example": "1.0,1!example.com,219,1,c1554a1301!example2.com,3290857094"
+            "example": "1.0,1!example.com,219,1,c1554a1301!example2.com,3290857094",
         },
-        "lineItemId": {
-            "type": "string",
-            "description": "Line item identifier",
-            "example": "23"
-        },
-        "organization": {
-            "type": "string",
-            "description": "Organization Name",
-            "example": "ComcastCable"
-        },
-        "os": {
-            "type": "string",
-            "description": "Visitor’s operating system",
-            "example": "MacOSX(iPhone)"
-        },
-        "partnerId": {
-            "type": "string",
-            "description": "Partner identifier",
-            "example": "examp"
-        },
-        "placementId": {
-            "type": "string",
-            "description": "Creative identifier",
-            "example": "872093903"
-        },
-        "postalCode": {
-            "type": "string",
-            "description": "Visitor’s postal code",
-            "example": "101773"
-        },
-        "publisherId": {
-            "type": "string",
-            "description": "Publisher identifier",
-            "example": "examplemedia"
-        },
-        "regionCode": {
-            "type": "string",
-            "description": "Visitor’s region code",
-            "example": "11"
-        },
-        "segment": {
-            "type": "string",
-            "description": "Segment",
-            "example": "5778,2374"
-        },
-        "siteId": {
-            "type": "string",
-            "description": "Site identifier",
-            "example": "7714"
-        },
+        "lineItemId": {"type": "string", "description": "Line item identifier", "example": "23"},
+        "organization": {"type": "string", "description": "Organization Name", "example": "ComcastCable"},
+        "os": {"type": "string", "description": "Visitors operating system", "example": "MacOSX(iPhone)"},
+        "partnerId": {"type": "string", "description": "Partner identifier", "example": "examp"},
+        "placementId": {"type": "string", "description": "Creative identifier", "example": "872093903"},
+        "postalCode": {"type": "string", "description": "Visitors postal code", "example": "101773"},
+        "publisherId": {"type": "string", "description": "Publisher identifier", "example": "examplemedia"},
+        "regionCode": {"type": "string", "description": "Visitors region code", "example": "11"},
+        "segment": {"type": "string", "description": "Segment", "example": "5778,2374"},
+        "siteId": {"type": "string", "description": "Site identifier", "example": "7714"},
         "adultRisk": {
             "type": "string",
             "description": "Adult Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "drugRisk": {
             "type": "string",
             "description": "Drug Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "alcoholRisk": {
             "type": "string",
             "description": "Alcohol Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "advisoriesRisk": {
             "type": "string",
             "description": "Advisories Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "hateRisk": {
             "type": "string",
             "description": "Hate Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "offensiveRisk": {
             "type": "string",
             "description": "Offensive Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "gamblingRisk": {
             "type": "string",
             "description": "Gambling Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
         },
         "violenceRisk": {
             "type": "string",
             "description": "Violence Risk (Brand Safety)",
-            "enum": [
-                "low",
-                "medium",
-                "high"
-            ],
-            "example": "medium"
-        }
-    }
+            "enum": ["low", "medium", "high"],
+            "example": "medium",
+        },
+    },
 }
 metrics = {
     "type": "object",
     "description": "Metrics report the numbers used for quantitative measurement in relation to the reported attributes of dimension. For example, the impressions metric indicates the total number of impressions for each dimension's given row. Many of the metrics available via the API align with the metrics available in Pixalate's dashboard reporting.",
     "properties": {
-        "impressions": {
-            "type": "integer",
-            "description": "Gross Ad Counts",
-            "example": 107638742
-        },
-        "shareOfImpressions": {
-            "type": "number",
-            "description": "Share of Gross Ad Counts %",
-            "example": 1
-        },
-        "ssaiImpressions": {
-            "type": "integer",
-            "description": "Gross SSAI Ad Counts",
-            "example": 3552420
-        },
-        "ssaiImpressionsRate": {
-            "type": "number",
-            "description": "Gross SSAI Ad Counts %",
-            "example": 0.33
-        },
+        "impressions": {"type": "integer", "description": "Gross Ad Counts", "example": 107638742},
+        "shareOfImpressions": {"type": "number", "description": "Share of Gross Ad Counts %", "example": 1},
+        "ssaiImpressions": {"type": "integer", "description": "Gross SSAI Ad Counts", "example": 3552420},
+        "ssaiImpressionsRate": {"type": "number", "description": "Gross SSAI Ad Counts %", "example": 0.33},
         "ssaiTransparentImpressions": {
             "type": "integer",
             "description": "Gross SSAI Transparent Ad Counts",
-            "example": 1333924
+            "example": 1333924,
         },
         "ssaiTransparentImpressionsRate": {
             "type": "number",
             "description": "Gross SSAI Transparent Ad Counts %",
-            "example": 0.01239
+            "example": 0.01239,
         },
-        "ipv6Impressions": {
-            "type": "integer",
-            "description": "Gross IPv6 Ad Counts",
-            "example": 38132536
-        },
-        "ipv6ImpressionsRate": {
-            "type": "number",
-            "description": "Gross IPv6 Ad Counts %",
-            "example": 0.35426
-        },
-        "duplicateImps": {
-            "type": "integer",
-            "description": "Gross Duplicate Ad Counts",
-            "example": 4644646
-        },
-        "duplicateImpsRate": {
-            "type": "number",
-            "description": "Gross Duplicate Ad Counts %",
-            "example": 0.04315
-        },
-        "nonGivtImpressions": {
-            "type": "integer",
-            "description": "Ad Counts",
-            "example": 106485383
-        },
-        "shareOfNonGivtImpressions": {
-            "type": "number",
-            "description": "Share of Ad Counts %",
-            "example": 1
-        },
-        "nonGivtSsaiImpressions": {
-            "type": "integer",
-            "description": "SSAI Ad Counts",
-            "example": 3469267
-        },
-        "nonGivtSsaiImpressionsRate": {
-            "type": "number",
-            "description": "SSAI Ad Counts %",
-            "example": 0.03258
-        },
+        "ipv6Impressions": {"type": "integer", "description": "Gross IPv6 Ad Counts", "example": 38132536},
+        "ipv6ImpressionsRate": {"type": "number", "description": "Gross IPv6 Ad Counts %", "example": 0.35426},
+        "duplicateImps": {"type": "integer", "description": "Gross Duplicate Ad Counts", "example": 4644646},
+        "duplicateImpsRate": {"type": "number", "description": "Gross Duplicate Ad Counts %", "example": 0.04315},
+        "nonGivtImpressions": {"type": "integer", "description": "Ad Counts", "example": 106485383},
+        "shareOfNonGivtImpressions": {"type": "number", "description": "Share of Ad Counts %", "example": 1},
+        "nonGivtSsaiImpressions": {"type": "integer", "description": "SSAI Ad Counts", "example": 3469267},
+        "nonGivtSsaiImpressionsRate": {"type": "number", "description": "SSAI Ad Counts %", "example": 0.03258},
         "nonGivtSsaiTransparentImpressions": {
             "type": "integer",
             "description": "SSAI Transparent Ad Counts",
-            "example": 1325682
+            "example": 1325682,
         },
         "nonGivtSsaiTransparentImpressionsRate": {
             "type": "number",
             "description": "SSAI Transparent Ad Counts %",
-            "example": 0.01245
+            "example": 0.01245,
         },
-        "nonGivtIpv6Impressions": {
-            "type": "integer",
-            "description": "IPv6 Ad Counts",
-            "example": 38075513
-        },
-        "nonGivtIpv6ImpressionsRate": {
-            "type": "number",
-            "description": "IPv6 Ad Counts %",
-            "example": 0.35757
-        },
-        "nonGivtDuplicateImps": {
-            "type": "integer",
-            "description": "Duplicate Ad Counts",
-            "example": 4314329
-        },
-        "nonGivtDuplicateImpsRate": {
-            "type": "number",
-            "description": "Duplicate Ad Counts %",
-            "example": 0.04052
-        },
-        "nonGivtSivtImpressions": {
-            "type": "integer",
-            "description": "Net Ad Counts",
-            "example": 99896454
-        },
-        "shareOfNonGivtSivtImpressions": {
-            "type": "number",
-            "description": "Share of Net Ad Counts %",
-            "example": 1
-        },
-        "nonGivtSivtSsaiImpressions": {
-            "type": "integer",
-            "description": "Net SSAI Ad Counts",
-            "example": 2761628
-        },
-        "nonGivtSivtSsaiImpressionsRate": {
-            "type": "number",
-            "description": "Net SSAI Ad Counts %",
-            "example": 0.02764
-        },
+        "nonGivtIpv6Impressions": {"type": "integer", "description": "IPv6 Ad Counts", "example": 38075513},
+        "nonGivtIpv6ImpressionsRate": {"type": "number", "description": "IPv6 Ad Counts %", "example": 0.35757},
+        "nonGivtDuplicateImps": {"type": "integer", "description": "Duplicate Ad Counts", "example": 4314329},
+        "nonGivtDuplicateImpsRate": {"type": "number", "description": "Duplicate Ad Counts %", "example": 0.04052},
+        "nonGivtSivtImpressions": {"type": "integer", "description": "Net Ad Counts", "example": 99896454},
+        "shareOfNonGivtSivtImpressions": {"type": "number", "description": "Share of Net Ad Counts %", "example": 1},
+        "nonGivtSivtSsaiImpressions": {"type": "integer", "description": "Net SSAI Ad Counts", "example": 2761628},
+        "nonGivtSivtSsaiImpressionsRate": {"type": "number", "description": "Net SSAI Ad Counts %", "example": 0.02764},
         "nonGivtSivtSsaiTransparentImpressions": {
             "type": "integer",
             "description": "Net SSAI Transparent Ad Counts",
-            "example": 1182730
+            "example": 1182730,
         },
         "nonGivtSivtSsaiTransparentImpressionsRate": {
             "type": "number",
             "description": "Net SSAI Transparent Ad Counts %",
-            "example": 0.01184
+            "example": 0.01184,
         },
-        "nonGivtSivtIpv6Impressions": {
-            "type": "integer",
-            "description": "Net IPv6 Ad Counts",
-            "example": 35873185
-        },
-        "nonGivtSivtIpv6ImpressionsRate": {
-            "type": "number",
-            "description": "Net IPv6 Ad Counts %",
-            "example": 0.3591
-        },
-        "nonGivtSivtDuplicateImps": {
-            "type": "integer",
-            "description": "Net Duplicate Ad Counts",
-            "example": 3668854
-        },
+        "nonGivtSivtIpv6Impressions": {"type": "integer", "description": "Net IPv6 Ad Counts", "example": 35873185},
+        "nonGivtSivtIpv6ImpressionsRate": {"type": "number", "description": "Net IPv6 Ad Counts %", "example": 0.3591},
+        "nonGivtSivtDuplicateImps": {"type": "integer", "description": "Net Duplicate Ad Counts", "example": 3668854},
         "nonGivtSivtDuplicateImpsRate": {
             "type": "number",
             "description": "Net Duplicate Ad Counts %",
-            "example": 0.03673
+            "example": 0.03673,
         },
-        "givtImpressions": {
-            "type": "integer",
-            "description": "GIVT Ad Counts",
-            "example": 1153359
-        },
-        "givtImpsRate": {
-            "type": "number",
-            "description": "GIVT Ad Counts %",
-            "example": 0.01072
-        },
-        "shareOfGivtImpressions": {
-            "type": "number",
-            "description": "Share of GIVT Ad Counts %",
-            "example": 1
-        },
-        "givtIpv6Impressions": {
-            "type": "integer",
-            "description": "IPv6 GIVT Ad Counts",
-            "example": 57023
-        },
-        "givtIpv6ImpressionsRate": {
-            "type": "number",
-            "description": "IPv6 GIVT Ad Counts %",
-            "example": 0.00053
-        },
-        "sivtImpressions": {
-            "type": "integer",
-            "description": "SIVT Ad Counts",
-            "example": 6588929
-        },
-        "sivtImpsRate": {
-            "type": "number",
-            "description": "SIVT Ad Counts %",
-            "example": 0.06121
-        },
-        "shareOfSivtImpressions": {
-            "type": "number",
-            "description": "Share of SIVT Ad Counts %",
-            "example": 1
-        },
-        "shareOfGivtSivtImpressions": {
-            "type": "number",
-            "description": "Share of IVT Ad Counts %",
-            "example": 1
-        },
-        "sivtIpv6Impressions": {
-            "type": "integer",
-            "description": "IPv6 SIVT Ad Counts",
-            "example": 2202328
-        },
-        "sivtIpv6ImpressionsRate": {
-            "type": "number",
-            "description": "IPv6 SIVT Ad Counts %",
-            "example": 0.02046
-        },
-        "givtSivtIpv6Impressions": {
-            "type": "integer",
-            "description": "IPv6 IVT Ad Counts",
-            "example": 2259351
-        },
-        "givtSivtIpv6ImpressionsRate": {
-            "type": "number",
-            "description": "IPv6 IVT Ad Counts %",
-            "example": 0.02099
-        }
-    }
+        "givtImpressions": {"type": "integer", "description": "GIVT Ad Counts", "example": 1153359},
+        "givtImpsRate": {"type": "number", "description": "GIVT Ad Counts %", "example": 0.01072},
+        "shareOfGivtImpressions": {"type": "number", "description": "Share of GIVT Ad Counts %", "example": 1},
+        "givtIpv6Impressions": {"type": "integer", "description": "IPv6 GIVT Ad Counts", "example": 57023},
+        "givtIpv6ImpressionsRate": {"type": "number", "description": "IPv6 GIVT Ad Counts %", "example": 0.00053},
+        "sivtImpressions": {"type": "integer", "description": "SIVT Ad Counts", "example": 6588929},
+        "sivtImpsRate": {"type": "number", "description": "SIVT Ad Counts %", "example": 0.06121},
+        "shareOfSivtImpressions": {"type": "number", "description": "Share of SIVT Ad Counts %", "example": 1},
+        "shareOfGivtSivtImpressions": {"type": "number", "description": "Share of IVT Ad Counts %", "example": 1},
+        "sivtIpv6Impressions": {"type": "integer", "description": "IPv6 SIVT Ad Counts", "example": 2202328},
+        "sivtIpv6ImpressionsRate": {"type": "number", "description": "IPv6 SIVT Ad Counts %", "example": 0.02046},
+        "givtSivtIpv6Impressions": {"type": "integer", "description": "IPv6 IVT Ad Counts", "example": 2259351},
+        "givtSivtIpv6ImpressionsRate": {"type": "number", "description": "IPv6 IVT Ad Counts %", "example": 0.02099},
+    },
 }

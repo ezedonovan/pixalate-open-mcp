@@ -4,7 +4,8 @@ from pydantic import BaseModel, Field
 class FraudRequest(BaseModel):
     pretty: bool = Field(default=False, description="Whether to return the response in pretty JSON format.")
     ip: str = Field(description="The internet protocol address.")
-    deviceId: str = Field(description="""An ID that characterizes a mobile device. Various types are acceptable, including but not limited to the following:
+    deviceId: str = Field(
+        description="""An ID that characterizes a mobile device. Various types are acceptable, including but not limited to the following:
 
 ADID (Android): Google advertising ID, 36 characters (e.g., FF67345D-BF11-7823-1111-FFED421776FC)
 IDFA (iOS): Apple advertising ID, 36 characters (e.g., A217D9FC-C1BE-4BEF-94CD-1EE82147C1AA)
@@ -14,7 +15,8 @@ SHA1 (Multiple): The SHA-1 hash of a hardware device identifier (e.g., MAC addre
 WAID (Windows): Windows advertising ID, 36 characters (e.g., 97615775-57b5-4300-90b4-ba0c22b60e34)
 RIDA (Roku OS): Roku's privacy-friendly device ID, 36 characters (e.g., 331319d2-4cc2-51ac-de21-aa62f1e143c1)
 MSAI (Xbox): Advertising ID for Microsoft's Xbox, 36 characters (e.g., bc23c3de-5d32-4d0c-de3a-94ce878a0379)
-GAID (Android): Google's Advertising ID, 36 characters (e.g., AE63F1D9-0F3A-4B7A-891D-5E23F12C9B1A)""")
+GAID (Android): Google's Advertising ID, 36 characters (e.g., AE63F1D9-0F3A-4B7A-891D-5E23F12C9B1A)"""
+    )
     userAgent: str = Field(description="The browser or device supplied agent string.")
 
 

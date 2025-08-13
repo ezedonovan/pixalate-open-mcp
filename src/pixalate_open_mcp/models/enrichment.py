@@ -1,4 +1,4 @@
-from typing import List, Literal
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -26,7 +26,7 @@ MOBILE_WIDGETS = [
 
 
 class EnrichmentMobileRequest(BaseModel):
-    appIds: List[str] = Field(
+    appIds: list[str] = Field(
         description="List of one or many mobile app's unique identifier. This is a package name on Google Play or a track id on Apple app Store."
     )
     device: Literal["GLOBAL", "smartphone", "tablet"] = Field(
@@ -37,13 +37,13 @@ class EnrichmentMobileRequest(BaseModel):
         default="GLOBAL",
         description="Filter by region. All regions are returned by default. GLOBAL indicates aggregated traffic from all regions.",
     )
-    widget: List[Literal[tuple(MOBILE_WIDGETS)]] = Field(
+    widget: list[Literal[tuple(MOBILE_WIDGETS)]] = Field(
         default=MOBILE_WIDGETS, description="Filter by widgets to return. All widgets are returned by default."
     )
 
 
 class EnrichmentDomainRequest(BaseModel):
-    adDomain: List[str] = Field(description="List of one or many domains.")
+    adDomain: list[str] = Field(description="List of one or many domains.")
     device: Literal["GLOBAL", "desktop", "mobile"] = Field(
         default="GLOBAL", description="Filter by device. All devices are returned by default."
     )
@@ -54,7 +54,7 @@ class EnrichmentDomainRequest(BaseModel):
 
 
 class EnrichmentCTVRequest(BaseModel):
-    appIds: List[str] = Field(description="List of one or many CTV app IDs.")
+    appIds: list[str] = Field(description="List of one or many CTV app IDs.")
     device: Literal["roku", "firetv", "tvos", "samsung"] = Field(
         default="GLOBAL", description="Filter by device. All devices are returned by default."
     )

@@ -56,7 +56,7 @@ This is a Pixalate Open MCP (Model Context Protocol) Server that provides analyt
 
 **Key Toolsets**:
 - **Analytics**: Provides metadata and reporting capabilities for analytics data
-- **Fraud**: Fraud detection and analysis tools  
+- **Fraud**: Fraud detection and analysis tools
 - **Enrichment**: Data enrichment services
 
 ### Configuration and Utilities
@@ -75,7 +75,7 @@ This is a Pixalate Open MCP (Model Context Protocol) Server that provides analyt
 
 Required for API access:
 - `X_API_KEY`: Pixalate API key
-- `LOG_LEVEL`: Logging level (default: DEBUG)  
+- `LOG_LEVEL`: Logging level (default: DEBUG)
 - `MCP_SERVER_NAME`: Server name (default: pixalate-open-mcp)
 
 ## Project Structure Notes
