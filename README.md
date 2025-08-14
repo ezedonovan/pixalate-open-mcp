@@ -20,11 +20,16 @@ Install using `uv` (recommended for reliability):
 ```bash
 # Install the MCP server as an isolated tool
 uv tool install pixalate_open_mcp
+# or upgrade
+uv tool upgrade pixalate_open_mcp
 
 # Find the installed binary path
 which pixalate_open_mcp  # macOS/Linux
 where pixalate_open_mcp  # Windows
 ```
+
+Instructions to install `uv` can be found [here](https://docs.astral.sh/uv/getting-started/installation/) in Astral
+documentation.
 
 ### 2. Get your Pixalate API key
 
@@ -38,15 +43,16 @@ You'll need a Pixalate API key to access the services:
 Add this configuration to your Claude Desktop config file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "pixalate_open_mcp": {
-      "command": "/absolute/path/to/pixalate_open_mcp",
+      "command": "<path to the tool from step 1>",
       "env": {
-        "X_API_KEY": "your-pixalate-api-key-here"
+        "X_API_KEY": "<your-pixalate-api-key-here>"
       }
     }
   }
