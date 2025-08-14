@@ -141,7 +141,17 @@ Example : impressions,nonGivtViews,nonGivtViewsRate,nonGivtViewability,viewabili
         default=False,
         description="""If set to true, then processing is handled identically as if the isAsync parameter is set to true. However, the returned CSV file contains a single column with each row being a URL to a CSV file that contains part of the data. Large results that set ORDER BY may cause an 400 Bad Request HTTP status code. To resolve, try removing the ORDER BY clause. Note that this parameter is only recognized when the exportUri parameter is also supplied as true. Note also that the limit parameter is ignored when this parameter is set to true.""",
     )
-    pretty: bool = Field(default=False, description="If true, return pretty JSON. Default is false.")
+
+    def to_params(self):
+        return {
+            "timeZone": self.timeZone,
+            "start": self.start,
+            "limit": self.limit,
+            "q": self.q.construct_query(),
+            "exportUri": self.exportUri,
+            "isAsync": self.isAsync,
+            "isLargeResultSet": self.isLargeResultSet,
+        }
 
 
 class AnalyticsResponse(BaseModel):

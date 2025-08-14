@@ -4,7 +4,13 @@ from urllib.parse import urlencode
 from pixalate_open_mcp.models.enrichment import EnrichmentCTVRequest, EnrichmentDomainRequest, EnrichmentMobileRequest
 from pixalate_open_mcp.models.metadata import Metadata
 from pixalate_open_mcp.models.tools import PixalateTool, PixalateToolset
-from pixalate_open_mcp.utils.request import RequestMethod, _handle_csv_upload, _handle_download, request_handler
+from pixalate_open_mcp.utils.request import (
+    RequestMethod,
+    _handle_csv_upload,
+    _handle_download,
+    _handle_download_response,
+    request_handler,
+)
 
 BASE_URL = "https://api.pixalate.com/api/v2/"
 
@@ -65,7 +71,8 @@ def get_enrichment_domains(request: EnrichmentDomainRequest) -> dict:
 def _handle_enrichment_request(url, app_or_domain_ids: list[str], column_name: str, params: dict) -> dict:
     if len(app_or_domain_ids) > 1:
         download_url = _handle_csv_upload(url=url, column_name=column_name, data=app_or_domain_ids, params=params)
-        data = _handle_download(download_url)
+        response = _handle_download(download_url)
+        data = _handle_download_response(response)
         return data
     else:
         url = os.path.join(url, app_or_domain_ids[0])

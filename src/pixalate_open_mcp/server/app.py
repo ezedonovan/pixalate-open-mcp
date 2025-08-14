@@ -5,6 +5,7 @@ from typing import Optional
 import click
 from mcp.server.fastmcp import FastMCP
 
+from pixalate_open_mcp.__version__ import __version__
 from pixalate_open_mcp.models.config import ServerConfig, load_config
 from pixalate_open_mcp.tools.analytics.tools import toolset as analytics_toolset
 from pixalate_open_mcp.tools.enrichment.tools import toolset as enrichment_toolset
@@ -26,6 +27,18 @@ def register_tools(mcp_server: FastMCP) -> None:
         toolset_name = toolset.name
         for tool in toolset.tools:
             mcp_server.add_tool(fn=tool.handler, title=f"{toolset_name} - {tool.title}", description=tool.description)
+    mcp_server.add_tool(
+        fn=get_mcp_server_version,
+        title="Pixalate Open MCP - Version",
+        description="Get the version of the Pixalate Open MCP server",
+    )
+
+
+def get_mcp_server_version() -> dict:
+    return {
+        "name": "Pixalate Open MCP",
+        "version": __version__,
+    }
 
 
 server = create_mcp_server()

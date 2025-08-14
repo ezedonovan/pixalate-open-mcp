@@ -1,6 +1,6 @@
 [project]
 name = "pixalate-open-mcp"
-version = "0.0.1"
+dynamic = ["version"]
 description = "Pixalate Open MCP Server"
 authors = [{ name = "Ezequiel", email = "info@pixalate.com" }]
 readme = "README.md"
@@ -49,6 +49,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pixalate_open_mcp"]
+
+[tool.hatch.version]
+path = "src/pixalate_open_mcp/__version__.py"
 
 [tool.mypy]
 files = ["src"]

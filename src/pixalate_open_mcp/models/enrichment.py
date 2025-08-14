@@ -41,6 +41,13 @@ class EnrichmentMobileRequest(BaseModel):
         default=MOBILE_WIDGETS, description="Filter by widgets to return. All widgets are returned by default."
     )
 
+    def to_params(self):
+        return {
+            "device": self.device,
+            "region": self.region,
+            "widget": self.widget,
+        }
+
 
 class EnrichmentDomainRequest(BaseModel):
     adDomain: list[str] = Field(description="List of one or many domains.")
@@ -52,11 +59,17 @@ class EnrichmentDomainRequest(BaseModel):
         description="Filter by region. All regions are returned by default. GLOBAL indicates aggregated traffic from all regions.",
     )
 
+    def to_params(self):
+        return {
+            "device": self.device,
+            "region": self.region,
+        }
+
 
 class EnrichmentCTVRequest(BaseModel):
     appIds: list[str] = Field(description="List of one or many CTV app IDs.")
     device: Literal["roku", "firetv", "tvos", "samsung"] = Field(
-        default="GLOBAL", description="Filter by device. All devices are returned by default."
+        description="Filter by device. All devices are returned by default."
     )
     region: Literal["GLOBAL", "NA", "EMEA", "LATAM", "APAC"] = Field(
         default="GLOBAL",
@@ -65,3 +78,10 @@ class EnrichmentCTVRequest(BaseModel):
     includeSpoofing: bool = Field(
         default=True, description="A true indicates that spoofing information should be included."
     )
+
+    def to_params(self):
+        return {
+            "device": self.device,
+            "region": self.region,
+            "includeSpoofing": self.includeSpoofing,
+        }
