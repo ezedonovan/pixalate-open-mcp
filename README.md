@@ -63,7 +63,7 @@ Once configured, restart Claude Desktop and you can ask it to:
 - "Check fraud risk for user agent Bot Googlebot/2.1 (iPod; N; RISC OS 2.4.35; IBM360; rv1.3.1) Alligator/20080524
   Jungledog/3.0"
 - "Get mobile app enrichment data for app ID 1407852246"
-- "Get mobile app enrichment data for app ID 1407852246 for table devices"
+- "Get mobile app enrichment data for app ID 1407852246 for tablet devices"
 - "Get mobile app enrichment data for app ID 1407852246 in EMEA region"
 - "Get CTV app enrichment data for app ID 71845 in North America region"
 - "Get CTV app enrichment data for these Roku app IDs: 151908, 74519"

@@ -1,5 +1,5 @@
 site_name: pixalate-open-mcp
-repo_url: https://github.com/pixalate/pixalate-open-mcp
+repo_url: https://github.com/pixalate-inc/pixalate-open-mcp
 site_url: https://pixalate.github.io/pixalate-open-mcp
 site_description: Pixalate OMCP Server
 site_author: Pixalate
@@ -41,7 +41,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/pixalate/pixalate-open-mcp
+      link: https://github.com/pixalate-inc/pixalate-open-mcp
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/pixalate-open-mcp
 

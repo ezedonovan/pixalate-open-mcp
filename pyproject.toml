@@ -22,7 +22,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://pixalate.github.io/pixalate-open-mcp/"
-Repository = "https://github.com/pixalate/pixalate-open-mcp"
+Repository = "https://github.com/pixalate-inc/pixalate-open-mcp"
 Documentation = "https://pixalate.github.io/pixalate-open-mcp/"
 
 [project.scripts]
