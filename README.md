@@ -164,6 +164,13 @@ Control log verbosity with the `LOG_LEVEL` environment variable:
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+## Privacy
+
+This MCP server sends user-provided parameters (such as IP addresses, device IDs, app IDs, and domain names) to
+Pixalate's APIs for processing. No conversation data is collected or stored by the server.
+
+For details on how Pixalate handles data, see the [Pixalate Privacy Policy](https://www.pixalate.com/privacy-policy).
+
 ## Author
 
 Ezequiel - edonovan@pixalate.com
