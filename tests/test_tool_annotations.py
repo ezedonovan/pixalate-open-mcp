@@ -1,5 +1,6 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
+import requests
 from mcp.types import ToolAnnotations
 
 from pixalate_open_mcp.models.tools import PixalateTool
@@ -53,3 +54,24 @@ def test_version_tool_not_open_world():
     assert len(version_call) == 1
     ann = version_call[0][1]["annotations"]
     assert ann.openWorldHint is False
+
+
+def test_analytics_metadata_handles_http_error():
+    with patch("pixalate_open_mcp.tools.analytics.tools.request_handler") as mock:
+        response = MagicMock()
+        response.raise_for_status.side_effect = requests.HTTPError(response=MagicMock(status_code=403))
+        mock.return_value = response
+        from pixalate_open_mcp.tools.analytics.tools import get_analytics_metadata
+
+        result = get_analytics_metadata()
+        assert "error" in result
+
+
+def test_analytics_metadata_handles_connection_error():
+    with patch("pixalate_open_mcp.tools.analytics.tools.request_handler") as mock:
+        mock.side_effect = requests.ConnectionError("Connection refused")
+        from pixalate_open_mcp.tools.analytics.tools import get_analytics_metadata
+
+        result = get_analytics_metadata()
+        assert "error" in result
+        assert "connect" in result["error"].lower()
