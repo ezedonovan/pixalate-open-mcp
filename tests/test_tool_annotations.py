@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import MagicMock, patch
 
 import requests
@@ -119,3 +120,19 @@ def test_enrichment_domains_handles_connection_error():
         result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
         assert "error" in result
         assert "connect" in result["error"].lower()
+
+
+def test_request_handler_does_not_log_params(caplog):
+    with patch("pixalate_open_mcp.utils.request.requests.get") as mock_get:
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.raise_for_status = MagicMock()
+        mock_get.return_value = mock_response
+
+        with caplog.at_level(logging.DEBUG, logger="pixalate_open_mcp"):
+            from pixalate_open_mcp.utils.request import RequestMethod, request_handler
+
+            request_handler(method=RequestMethod.GET, url="https://example.com/api", params={"ip": "1.2.3.4"})
+
+        for record in caplog.records:
+            assert "1.2.3.4" not in record.message, "User params should not appear in logs"

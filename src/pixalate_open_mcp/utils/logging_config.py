@@ -10,6 +10,17 @@ from pixalate_open_mcp.models.config import ServerConfig
 
 
 def get_default_log_dir() -> Path:
+    """Determine the platform-appropriate directory for MCP server log files.
+
+    Returns:
+        A ``Path`` pointing to the platform-specific log directory:
+
+        - **macOS**: ``~/Library/Logs/mcp-servers``
+        - **Linux (root)**: ``/var/log/mcp-servers``
+        - **Linux (non-root)**: ``~/.local/state/mcp-servers/logs``
+        - **Windows**: ``~/AppData/Local/mcp-servers/logs``
+        - **Other**: ``~/.mcp-servers/logs``
+    """
     system = platform.system().lower()
 
     if system == "darwin":
@@ -26,6 +37,17 @@ def get_default_log_dir() -> Path:
 
 
 def setup_logging(server_config: Optional[ServerConfig] = None) -> None:
+    """Configure logging for the Pixalate MCP server.
+
+    Sets up a rotating file handler (10 MB, 5 backups) at the platform log
+    directory and a stderr stream handler. Log level is resolved in priority
+    order: ``server_config.log_level`` > ``LOG_LEVEL`` env var > ``"INFO"``.
+
+    Args:
+        server_config: Optional server configuration object. When provided and
+            it contains a ``log_level`` attribute, that value takes precedence
+            over the ``LOG_LEVEL`` environment variable.
+    """
     log_level = "INFO"
     if server_config and hasattr(server_config, "log_level"):
         log_level = server_config.log_level.upper()
