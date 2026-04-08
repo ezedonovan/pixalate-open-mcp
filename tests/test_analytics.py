@@ -133,3 +133,52 @@ def test_analytics_toolset_has_two_tools():
 
     assert toolset.name == "Analytics API"
     assert len(toolset.tools) == 2
+
+
+def test_get_analytics_metadata_generic_exception():
+    with patch(
+        "pixalate_open_mcp.tools.analytics.tools.request_handler",
+        side_effect=Exception("something broke"),
+    ):
+        result = get_analytics_metadata()
+
+    assert "error" in result
+    assert "Unexpected" in result["error"]
+
+
+def test_get_analytics_report_timeout():
+    query = QueryConstruct(
+        selectDimension=["day"],
+        selectMetric=["impressions"],
+        dateFrom="2025-01-01",
+        dateTo="2025-01-31",
+    )
+    request = AnalyticsRequest(reportId="default", q=query)
+
+    with patch(
+        "pixalate_open_mcp.tools.analytics.tools.request_handler",
+        side_effect=requests.Timeout("request timed out"),
+    ):
+        result = get_analytics_report(request)
+
+    assert "error" in result
+    assert "timed out" in result["error"].lower()
+
+
+def test_get_analytics_report_generic_exception():
+    query = QueryConstruct(
+        selectDimension=["day"],
+        selectMetric=["impressions"],
+        dateFrom="2025-01-01",
+        dateTo="2025-01-31",
+    )
+    request = AnalyticsRequest(reportId="default", q=query)
+
+    with patch(
+        "pixalate_open_mcp.tools.analytics.tools.request_handler",
+        side_effect=Exception("something broke"),
+    ):
+        result = get_analytics_report(request)
+
+    assert "error" in result
+    assert "Unexpected" in result["error"]
