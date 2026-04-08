@@ -111,3 +111,57 @@ def test_get_fraud_http_error():
 def test_fraud_toolset_has_two_tools():
     assert toolset.name == "Fraud API"
     assert len(toolset.tools) == 2
+
+
+# ---------------------------------------------------------------------------
+# get_fraud_metadata additional error path tests
+# ---------------------------------------------------------------------------
+
+
+def test_get_fraud_metadata_connection_error():
+    with patch(
+        "pixalate_open_mcp.tools.fraud.tools.request_handler",
+        side_effect=requests.ConnectionError,
+    ):
+        result = get_fraud_metadata()
+
+    assert "error" in result
+    assert "connect" in result["error"].lower()
+
+
+def test_get_fraud_metadata_generic_exception():
+    with patch(
+        "pixalate_open_mcp.tools.fraud.tools.request_handler",
+        side_effect=Exception("broke"),
+    ):
+        result = get_fraud_metadata()
+
+    assert "error" in result
+    assert "Unexpected" in result["error"]
+
+
+# ---------------------------------------------------------------------------
+# get_fraud additional error path tests
+# ---------------------------------------------------------------------------
+
+
+def test_get_fraud_timeout():
+    with patch(
+        "pixalate_open_mcp.tools.fraud.tools.request_handler",
+        side_effect=requests.Timeout,
+    ):
+        result = get_fraud(FraudRequest(ip="1.2.3.4"))
+
+    assert "error" in result
+    assert "timed out" in result["error"].lower()
+
+
+def test_get_fraud_generic_exception():
+    with patch(
+        "pixalate_open_mcp.tools.fraud.tools.request_handler",
+        side_effect=Exception("broke"),
+    ):
+        result = get_fraud(FraudRequest(ip="1.2.3.4"))
+
+    assert "error" in result
+    assert "Unexpected" in result["error"]
