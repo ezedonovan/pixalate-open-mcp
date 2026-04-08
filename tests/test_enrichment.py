@@ -49,6 +49,27 @@ class TestGetEnrichmentMobileMetadata:
         assert "error" in result
         assert "500" in result["error"]
 
+    def test_connection_error(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
+            result = get_enrichment_mobile_metadata()
+
+        assert "error" in result
+        assert "connect" in result["error"].lower()
+
+    def test_timeout(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
+            result = get_enrichment_mobile_metadata()
+
+        assert "error" in result
+        assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("boom")):
+            result = get_enrichment_mobile_metadata()
+
+        assert "error" in result
+        assert "boom" in result["error"]
+
 
 class TestGetEnrichmentCTVMetadata:
     def test_success(self):
@@ -60,12 +81,37 @@ class TestGetEnrichmentCTVMetadata:
 
         assert result == {"lastUpdated": "2025-01-01"}
 
+    def test_http_error(self):
+        mock_resp = MagicMock()
+        http_err = requests.HTTPError(response=MagicMock(status_code=404))
+        mock_resp.raise_for_status.side_effect = http_err
+
+        with patch(f"{MODULE}.request_handler", return_value=mock_resp):
+            result = get_enrichment_ctv_metadata()
+
+        assert "error" in result
+        assert "404" in result["error"]
+
+    def test_connection_error(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
+            result = get_enrichment_ctv_metadata()
+
+        assert "error" in result
+        assert "connect" in result["error"].lower()
+
     def test_timeout(self):
         with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
             result = get_enrichment_ctv_metadata()
 
         assert "error" in result
         assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("ctv boom")):
+            result = get_enrichment_ctv_metadata()
+
+        assert "error" in result
+        assert "ctv boom" in result["error"]
 
 
 class TestGetEnrichmentDomainsMetadata:
@@ -78,12 +124,37 @@ class TestGetEnrichmentDomainsMetadata:
 
         assert result == {"quota": 500, "lastUpdated": "2025-03-01"}
 
+    def test_http_error(self):
+        mock_resp = MagicMock()
+        http_err = requests.HTTPError(response=MagicMock(status_code=401))
+        mock_resp.raise_for_status.side_effect = http_err
+
+        with patch(f"{MODULE}.request_handler", return_value=mock_resp):
+            result = get_enrichment_domains_metadata()
+
+        assert "error" in result
+        assert "401" in result["error"]
+
     def test_connection_error(self):
         with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
             result = get_enrichment_domains_metadata()
 
         assert "error" in result
         assert "connect" in result["error"].lower()
+
+    def test_timeout(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
+            result = get_enrichment_domains_metadata()
+
+        assert "error" in result
+        assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("domains meta boom")):
+            result = get_enrichment_domains_metadata()
+
+        assert "error" in result
+        assert "domains meta boom" in result["error"]
 
 
 # ---------------------------------------------------------------------------
@@ -114,12 +185,35 @@ class TestGetEnrichmentMobileApp:
         mock_download.assert_called_once_with("http://download")
         mock_resp.assert_called_once()
 
+    def test_http_error(self):
+        http_err = requests.HTTPError(response=MagicMock(status_code=503))
+
+        with patch(f"{MODULE}.request_handler", side_effect=http_err):
+            result = get_enrichment_mobile_app(EnrichmentMobileRequest(appIds=["123"]))
+
+        assert "error" in result
+        assert "503" in result["error"]
+
     def test_connection_error(self):
         with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
             result = get_enrichment_mobile_app(EnrichmentMobileRequest(appIds=["123"]))
 
         assert "error" in result
         assert "connect" in result["error"].lower()
+
+    def test_timeout(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
+            result = get_enrichment_mobile_app(EnrichmentMobileRequest(appIds=["123"]))
+
+        assert "error" in result
+        assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("mobile app boom")):
+            result = get_enrichment_mobile_app(EnrichmentMobileRequest(appIds=["123"]))
+
+        assert "error" in result
+        assert "mobile app boom" in result["error"]
 
 
 class TestGetEnrichmentCTVApp:
@@ -144,6 +238,27 @@ class TestGetEnrichmentCTVApp:
         assert "error" in result
         assert "403" in result["error"]
 
+    def test_connection_error(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
+            result = get_enrichment_ctv_app(EnrichmentCTVRequest(appIds=["456"], device="roku"))
+
+        assert "error" in result
+        assert "connect" in result["error"].lower()
+
+    def test_timeout(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
+            result = get_enrichment_ctv_app(EnrichmentCTVRequest(appIds=["456"], device="roku"))
+
+        assert "error" in result
+        assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("ctv app boom")):
+            result = get_enrichment_ctv_app(EnrichmentCTVRequest(appIds=["456"], device="roku"))
+
+        assert "error" in result
+        assert "ctv app boom" in result["error"]
+
 
 class TestGetEnrichmentDomains:
     def test_single_domain(self):
@@ -155,12 +270,35 @@ class TestGetEnrichmentDomains:
 
         assert result == {"domain": "cnn.com", "risk": "low"}
 
+    def test_http_error(self):
+        http_err = requests.HTTPError(response=MagicMock(status_code=429))
+
+        with patch(f"{MODULE}.request_handler", side_effect=http_err):
+            result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
+
+        assert "error" in result
+        assert "429" in result["error"]
+
     def test_connection_error(self):
         with patch(f"{MODULE}.request_handler", side_effect=requests.ConnectionError):
             result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
 
         assert "error" in result
         assert "connect" in result["error"].lower()
+
+    def test_timeout(self):
+        with patch(f"{MODULE}.request_handler", side_effect=requests.Timeout):
+            result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
+
+        assert "error" in result
+        assert "timed out" in result["error"]
+
+    def test_unexpected_exception(self):
+        with patch(f"{MODULE}.request_handler", side_effect=Exception("domains boom")):
+            result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
+
+        assert "error" in result
+        assert "domains boom" in result["error"]
 
 
 # ---------------------------------------------------------------------------
