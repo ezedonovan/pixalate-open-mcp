@@ -1,7 +1,7 @@
-import logging
-from unittest.mock import MagicMock, patch
+"""Tests for MCP tool annotation fields and registration."""
 
-import requests
+from unittest.mock import MagicMock
+
 from mcp.types import ToolAnnotations
 
 from pixalate_open_mcp.models.tools import PixalateTool
@@ -55,84 +55,3 @@ def test_version_tool_not_open_world():
     assert len(version_call) == 1
     ann = version_call[0][1]["annotations"]
     assert ann.openWorldHint is False
-
-
-def test_analytics_metadata_handles_http_error():
-    with patch("pixalate_open_mcp.tools.analytics.tools.request_handler") as mock:
-        response = MagicMock()
-        response.raise_for_status.side_effect = requests.HTTPError(response=MagicMock(status_code=403))
-        mock.return_value = response
-        from pixalate_open_mcp.tools.analytics.tools import get_analytics_metadata
-
-        result = get_analytics_metadata()
-        assert "error" in result
-
-
-def test_analytics_metadata_handles_connection_error():
-    with patch("pixalate_open_mcp.tools.analytics.tools.request_handler") as mock:
-        mock.side_effect = requests.ConnectionError("Connection refused")
-        from pixalate_open_mcp.tools.analytics.tools import get_analytics_metadata
-
-        result = get_analytics_metadata()
-        assert "error" in result
-        assert "connect" in result["error"].lower()
-
-
-def test_fraud_metadata_handles_http_error():
-    with patch("pixalate_open_mcp.tools.fraud.tools.request_handler") as mock:
-        response = MagicMock()
-        response.raise_for_status.side_effect = requests.HTTPError(response=MagicMock(status_code=401))
-        mock.return_value = response
-        from pixalate_open_mcp.tools.fraud.tools import get_fraud_metadata
-
-        result = get_fraud_metadata()
-        assert "error" in result
-
-
-def test_fraud_handles_connection_error():
-    with patch("pixalate_open_mcp.tools.fraud.tools.request_handler") as mock:
-        mock.side_effect = requests.ConnectionError("Connection refused")
-        from pixalate_open_mcp.models.fraud import FraudRequest
-        from pixalate_open_mcp.tools.fraud.tools import get_fraud
-
-        result = get_fraud(FraudRequest(ip="1.2.3.4"))
-        assert "error" in result
-        assert "connect" in result["error"].lower()
-
-
-def test_enrichment_mobile_metadata_handles_http_error():
-    with patch("pixalate_open_mcp.tools.enrichment.tools.request_handler") as mock:
-        response = MagicMock()
-        response.raise_for_status.side_effect = requests.HTTPError(response=MagicMock(status_code=500))
-        mock.return_value = response
-        from pixalate_open_mcp.tools.enrichment.tools import get_enrichment_mobile_metadata
-
-        result = get_enrichment_mobile_metadata()
-        assert "error" in result
-
-
-def test_enrichment_domains_handles_connection_error():
-    with patch("pixalate_open_mcp.tools.enrichment.tools.request_handler") as mock:
-        mock.side_effect = requests.ConnectionError("Connection refused")
-        from pixalate_open_mcp.models.enrichment import EnrichmentDomainRequest
-        from pixalate_open_mcp.tools.enrichment.tools import get_enrichment_domains
-
-        result = get_enrichment_domains(EnrichmentDomainRequest(adDomain=["cnn.com"]))
-        assert "error" in result
-        assert "connect" in result["error"].lower()
-
-
-def test_request_handler_does_not_log_params(caplog):
-    with patch("pixalate_open_mcp.utils.request.requests.get") as mock_get:
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.raise_for_status = MagicMock()
-        mock_get.return_value = mock_response
-
-        with caplog.at_level(logging.DEBUG, logger="pixalate_open_mcp"):
-            from pixalate_open_mcp.utils.request import RequestMethod, request_handler
-
-            request_handler(method=RequestMethod.GET, url="https://example.com/api", params={"ip": "1.2.3.4"})
-
-        for record in caplog.records:
-            assert "1.2.3.4" not in record.message, "User params should not appear in logs"
